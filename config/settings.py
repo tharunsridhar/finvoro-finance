@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.users',
     'apps.accounts',
+    'apps.categories',
     'apps.transactions',
     'apps.budgets',
     'apps.reports',
