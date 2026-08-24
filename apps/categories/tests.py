@@ -97,3 +97,11 @@ def test_invalid_category_type_rejected(client_a):
         CATEGORIES_URL, {"name": "Weird", "category_type": "SAVINGS"}, format="json"
     )
     assert response.status_code == 400
+
+
+@pytest.mark.django_db
+def test_filter_by_category_type(client_a):
+    response = client_a.get(CATEGORIES_URL, {"category_type": "EXPENSE"})
+    types = {item["category_type"] for item in response.data["results"]}
+    assert types == {"EXPENSE"}
+    assert "Salary" not in {item["name"] for item in response.data["results"]}

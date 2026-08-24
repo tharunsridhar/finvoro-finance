@@ -7,6 +7,7 @@ from .serializers import CategorySerializer
 
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
+    filterset_fields = ["category_type"]
 
     def get_queryset(self):
         user = self.request.user
