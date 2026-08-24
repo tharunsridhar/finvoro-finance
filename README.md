@@ -1,18 +1,18 @@
 # Finvoro
 
-A personal finance management API and web app built with Django, Django REST Framework, and PostgreSQL. Users can track accounts, categorize income and expenses, set monthly budgets, and view spending reports — all behind JWT-authenticated, per-user-scoped endpoints.
+A personal finance management API and web app built with Django, Django REST Framework, and PostgreSQL. Users can track accounts, categorize income and expenses, set monthly budgets, and view spending reports : all behind JWT-authenticated, per-user-scoped endpoints.
 
 Built as a learning project to practice production-grade Django backend patterns: REST API design, JWT auth, PostgreSQL constraints and indexes, query optimization, and automated testing.
 
 ## Features
 
-- **Accounts** — bank, cash, wallet, or credit card accounts with a live-computed current balance (initial balance + income − expenses, never a stale duplicated value).
-- **Categories** — system-wide defaults (Food, Salary, Rent, ...) plus user-created custom categories, each typed as INCOME or EXPENSE.
-- **Transactions** — the core feature: filterable by category, account, type, and date range; paginated; ownership-enforced end to end.
-- **Budgets** — monthly per-category budgets with computed spent/remaining/percentage-used.
-- **Reports** — monthly summary, month-by-month breakdown, category-wise spending, and per-account balances.
-- **Frontend** — a small vanilla HTML/CSS/JS app (served by Django itself, same-origin) covering register/login/dashboard/accounts/transactions/budgets.
-- **API docs** — interactive Swagger UI and ReDoc via `drf-spectacular`.
+- **Accounts** : bank, cash, wallet, or credit card accounts with a live-computed current balance (initial balance + income − expenses, never a stale duplicated value).
+- **Categories** : system-wide defaults (Food, Salary, Rent, ...) plus user-created custom categories, each typed as INCOME or EXPENSE.
+- **Transactions** : the core feature: filterable by category, account, type, and date range; paginated; ownership-enforced end to end.
+- **Budgets** : monthly per-category budgets with computed spent/remaining/percentage-used.
+- **Reports** : monthly summary, month-by-month breakdown, category-wise spending, and per-account balances.
+- **Frontend** : a small vanilla HTML/CSS/JS app (served by Django itself, same-origin) covering register/login/dashboard/accounts/transactions/budgets.
+- **API docs** : interactive Swagger UI and ReDoc via `drf-spectacular`.
 
 ## Tech stack
 
@@ -102,6 +102,6 @@ Full interactive documentation (request/response schemas, try-it-out) is availab
 
 ## Deployment
 
-No Docker — standard Django deployment. The project ships with `gunicorn` (WSGI server) and `whitenoise` (serves static files directly, no separate static host needed) and a `Procfile` for platforms that read one (Render, Railway, Heroku-style). In production, set `DJANGO_DEBUG=False` in your environment — this automatically enables secure cookies and SSL redirect (see `config/settings.py`).
+No Docker : standard Django deployment. The project ships with `gunicorn` (WSGI server) and `whitenoise` (serves static files directly, no separate static host needed) and a `Procfile` for platforms that read one (Render, Railway, Heroku-style). In production, set `DJANGO_DEBUG=False` in your environment : this automatically enables secure cookies and SSL redirect (see `config/settings.py`).
 
-Note: `gunicorn` requires a Unix-like OS (it depends on the `fcntl` module) — it will not run on Windows. Use `python manage.py runserver` for local development on Windows; deploy to a Linux-based host for production.
+Note: `gunicorn` requires a Unix-like OS (it depends on the `fcntl` module) : it will not run on Windows. Use `python manage.py runserver` for local development on Windows; deploy to a Linux-based host for production.
