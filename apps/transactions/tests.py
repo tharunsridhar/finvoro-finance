@@ -225,6 +225,27 @@ def test_filter_by_date_range(client_a, account_a, food_category):
 
 
 @pytest.mark.django_db
+def test_transactions_are_paginated(client_a, account_a, food_category):
+    for day in range(1, 26):
+        Transaction.objects.create(
+            user=account_a.user,
+            account=account_a,
+            category=food_category,
+            amount="10.00",
+            transaction_type="EXPENSE",
+            date=date(2026, 8, day),
+        )
+    response = client_a.get(TRANSACTIONS_URL)
+    assert response.data["count"] == 25
+    assert len(response.data["results"]) == 20  # PAGE_SIZE
+    assert response.data["next"] is not None
+
+    second_page = client_a.get(response.data["next"])
+    assert len(second_page.data["results"]) == 5
+    assert second_page.data["next"] is None
+
+
+@pytest.mark.django_db
 def test_account_current_balance_reflects_transactions(client_a, account_a, salary_category, food_category):
     client_a.post(
         TRANSACTIONS_URL,
