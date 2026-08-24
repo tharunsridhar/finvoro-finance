@@ -1,14 +1,42 @@
-.venv/
+# Python
 __pycache__/
-*.pyc
-.env
-db.sqlite3
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django
 *.log
-.vscode/
-.idea/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Secrets / environment
+.env
+.env.local
+
+# Testing / coverage
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
-staticfiles/
+.tox/
+.cache/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+*.swo
 .DS_Store
 Thumbs.db
