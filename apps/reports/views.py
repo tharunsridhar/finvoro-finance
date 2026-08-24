@@ -35,7 +35,7 @@ class SummaryReportView(APIView):
         month = _int_param(request, "month", today.month)
         year = _int_param(request, "year", today.year)
 
-        accounts = Account.objects.filter(user=request.user)
+        accounts = Account.objects.filter(user=request.user).with_balance()
         total_balance = sum((account.current_balance for account in accounts), Decimal("0"))
 
         month_totals = Transaction.objects.filter(
@@ -153,7 +153,7 @@ class AccountReportView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        accounts = Account.objects.filter(user=request.user)
+        accounts = Account.objects.filter(user=request.user).with_balance()
         results = [
             {
                 "account_id": account.id,

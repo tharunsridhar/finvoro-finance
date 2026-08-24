@@ -29,6 +29,10 @@ class Transaction(models.Model):
                 condition=models.Q(amount__gt=0), name="transaction_amount_positive"
             ),
         ]
+        indexes = [
+            models.Index(fields=["user", "date"], name="txn_user_date_idx"),
+            models.Index(fields=["user", "transaction_type"], name="txn_user_type_idx"),
+        ]
         ordering = ["-date", "-created_at"]
 
     def __str__(self):
