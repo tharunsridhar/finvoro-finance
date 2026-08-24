@@ -95,6 +95,12 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
+        # Wrap every request in a DB transaction: if a view raises partway through,
+        # everything it wrote in that request rolls back instead of leaving
+        # half-applied data. No current view does more than one write, but this is
+        # the safety net for when one does (e.g. a future account-transfer feature
+        # that debits one account and credits another in the same request).
+        'ATOMIC_REQUESTS': True,
     }
 }
 
