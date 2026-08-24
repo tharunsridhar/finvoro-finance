@@ -100,8 +100,4 @@ GET  /api/v1/reports/accounts/
 
 Full interactive documentation (request/response schemas, try-it-out) is available at `/api/docs/` once the server is running.
 
-## Deployment
-
-No Docker : standard Django deployment. The project ships with `gunicorn` (WSGI server) and `whitenoise` (serves static files directly, no separate static host needed) and a `Procfile` for platforms that read one (Render, Railway, Heroku-style). In production, set `DJANGO_DEBUG=False` in your environment : this automatically enables secure cookies and SSL redirect (see `config/settings.py`).
-
-Note: `gunicorn` requires a Unix-like OS (it depends on the `fcntl` module) : it will not run on Windows. Use `python manage.py runserver` for local development on Windows; deploy to a Linux-based host for production.
+## by Tharun Sridhar Natarajan
