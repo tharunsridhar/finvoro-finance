@@ -2,12 +2,23 @@ from datetime import date
 from decimal import Decimal
 
 from django.db.models import Q, Sum
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.accounts.models import Account
 from apps.transactions.models import Transaction
+
+from .serializers import (
+    AccountReportSerializer,
+    CategoryReportSerializer,
+    MonthlyReportSerializer,
+    SummaryReportSerializer,
+)
+
+MONTH_PARAM = OpenApiParameter("month", int, description="1-12, defaults to the current month")
+YEAR_PARAM = OpenApiParameter("year", int, description="defaults to the current year")
 
 
 TWO_PLACES = Decimal("0.01")
@@ -30,6 +41,7 @@ def _money(value):
 class SummaryReportView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(parameters=[MONTH_PARAM, YEAR_PARAM], responses=SummaryReportSerializer)
     def get(self, request):
         today = date.today()
         month = _int_param(request, "month", today.month)
@@ -79,6 +91,7 @@ class SummaryReportView(APIView):
 class MonthlyReportView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(parameters=[YEAR_PARAM], responses=MonthlyReportSerializer)
     def get(self, request):
         today = date.today()
         year = _int_param(request, "year", today.year)
@@ -109,9 +122,18 @@ class MonthlyReportView(APIView):
         return Response({"year": year, "results": results})
 
 
+TRANSACTION_TYPE_PARAM = OpenApiParameter(
+    "transaction_type", str, description="INCOME or EXPENSE, defaults to EXPENSE"
+)
+
+
 class CategoryReportView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        parameters=[MONTH_PARAM, YEAR_PARAM, TRANSACTION_TYPE_PARAM],
+        responses=CategoryReportSerializer,
+    )
     def get(self, request):
         today = date.today()
         month = _int_param(request, "month", today.month)
@@ -152,6 +174,7 @@ class CategoryReportView(APIView):
 class AccountReportView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(responses=AccountReportSerializer)
     def get(self, request):
         accounts = Account.objects.filter(user=request.user).with_balance()
         results = [

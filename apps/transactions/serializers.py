@@ -33,7 +33,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         request = self.context.get("request")
-        if request is not None:
+        if request is not None and request.user.is_authenticated:
             self.fields["account"].queryset = Account.objects.filter(user=request.user)
             self.fields["category"].queryset = Category.objects.filter(
                 Q(user=request.user) | Q(user__isnull=True)

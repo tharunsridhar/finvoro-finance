@@ -45,7 +45,7 @@ class BudgetSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         request = self.context.get("request")
-        if request is not None:
+        if request is not None and request.user.is_authenticated:
             self.fields["category"].queryset = Category.objects.filter(
                 Q(user=request.user) | Q(user__isnull=True), category_type="EXPENSE"
             )
@@ -72,14 +72,14 @@ class BudgetSerializer(serializers.ModelSerializer):
             obj._spent_cache = total or Decimal("0")
         return obj._spent_cache
 
-    def get_spent(self, obj):
+    def get_spent(self, obj) -> str:
         return str(self._spent(obj).quantize(Decimal("0.01")))
 
-    def get_remaining(self, obj):
+    def get_remaining(self, obj) -> str:
         remaining = obj.amount - self._spent(obj)
         return str(remaining.quantize(Decimal("0.01")))
 
-    def get_percentage_used(self, obj):
+    def get_percentage_used(self, obj) -> float:
         spent = self._spent(obj)
         if obj.amount == 0:
             return 0.0

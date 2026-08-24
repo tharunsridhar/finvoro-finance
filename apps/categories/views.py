@@ -10,6 +10,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filterset_fields = ["category_type"]
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Category.objects.none()
         user = self.request.user
         if self.action in ("update", "partial_update", "destroy"):
             return Category.objects.filter(user=user)

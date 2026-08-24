@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
+    'drf_spectacular',
     'apps.users',
     'apps.accounts',
     'apps.categories',
@@ -167,6 +168,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -175,4 +177,20 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
+}
+
+
+# drf-spectacular (OpenAPI schema / Swagger UI)
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Finvoro API',
+    'DESCRIPTION': 'Personal finance management API: accounts, categories, transactions, budgets, and reports.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Transaction.transaction_type and Category.category_type carry identical
+    # INCOME/EXPENSE values, so drf-spectacular sees them as the same enum by
+    # content. Give that shared value set one fixed component name instead of
+    # letting each field's declaring model generate a conflicting one.
+    'ENUM_NAME_OVERRIDES': {
+        'IncomeExpenseEnum': 'apps.transactions.models.Transaction.TransactionType',
+    },
 }

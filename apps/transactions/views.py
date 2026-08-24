@@ -12,6 +12,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
     ordering = ["-date", "-created_at"]
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Transaction.objects.none()
         return Transaction.objects.filter(user=self.request.user).select_related(
             "account", "category"
         )
