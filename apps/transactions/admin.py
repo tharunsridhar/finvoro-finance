@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Transaction
+
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ["user", "account", "category", "amount", "transaction_type", "date"]
+    list_filter = ["transaction_type", "date"]
+    search_fields = ["description", "user__email"]

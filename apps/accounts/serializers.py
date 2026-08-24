@@ -6,6 +6,7 @@ from .models import Account
 
 class AccountSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    current_balance = serializers.DecimalField(max_digits=12, decimal_places=2, read_only=True)
 
     class Meta:
         model = Account
@@ -15,6 +16,7 @@ class AccountSerializer(serializers.ModelSerializer):
             "name",
             "account_type",
             "initial_balance",
+            "current_balance",
             "created_at",
             "updated_at",
         ]

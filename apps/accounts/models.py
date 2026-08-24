@@ -1,5 +1,8 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.db import models
+from django.db.models import Q, Sum
 
 
 class Account(models.Model):
@@ -26,3 +29,13 @@ class Account(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.get_account_type_display()})"
+
+    @property
+    def current_balance(self):
+        totals = self.transactions.aggregate(
+            income=Sum("amount", filter=Q(transaction_type="INCOME")),
+            expense=Sum("amount", filter=Q(transaction_type="EXPENSE")),
+        )
+        income = totals["income"] or Decimal("0")
+        expense = totals["expense"] or Decimal("0")
+        return self.initial_balance + income - expense
