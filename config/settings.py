@@ -194,3 +194,16 @@ SPECTACULAR_SETTINGS = {
         'IncomeExpenseEnum': 'apps.transactions.models.Transaction.TransactionType',
     },
 }
+
+
+# Production hardening (see manage.py check --deploy).
+# Only active when DJANGO_DEBUG=False, so local development over plain HTTP
+# is unaffected. SSL redirect/HSTS are still individually overridable in case
+# a hosting provider's own reverse proxy already terminates TLS.
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', 'True') == 'True'
+    SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '0'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_SECONDS > 0
+    SECURE_HSTS_PRELOAD = SECURE_HSTS_SECONDS > 0
