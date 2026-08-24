@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login - Finvoro{% endblock %}
+{% block navbar %}{% endblock %}
+{% block content %}
+<div class="auth-container">
+  <h1>Log in to Finvoro</h1>
+  <form id="login-form">
+    <label for="email">Email</label>
+    <input type="email" id="email" required autocomplete="email">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required autocomplete="current-password">
+
+    <button type="submit" id="submit-btn">Log in</button>
+    <div id="error-box" class="error-message" style="display:none;"></div>
+  </form>
+  <p class="auth-switch">No account? <a href="/register/">Register</a></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

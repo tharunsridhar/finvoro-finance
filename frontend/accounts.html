@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Accounts - Finvoro{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Accounts</h1>
+</div>
+
+<div class="card">
+  <h2>Add Account</h2>
+  <form id="account-form" class="form-inline">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+    </div>
+    <div>
+      <label for="account_type">Type</label>
+      <select id="account_type">
+        <option value="BANK">Bank</option>
+        <option value="CASH">Cash</option>
+        <option value="WALLET">Wallet</option>
+        <option value="CREDIT_CARD">Credit Card</option>
+      </select>
+    </div>
+    <div>
+      <label for="initial_balance">Initial Balance</label>
+      <input type="number" step="0.01" id="initial_balance" value="0">
+    </div>
+    <div>
+      <button type="submit" id="submit-btn">Add Account</button>
+    </div>
+  </form>
+  <div id="error-box" class="error-message" style="display:none;"></div>
+</div>
+
+<div class="card">
+  <div id="loading" class="loading-state">Loading...</div>
+  <table id="accounts-table" style="display:none;">
+    <thead>
+      <tr><th>Name</th><th>Type</th><th>Initial Balance</th><th>Current Balance</th><th></th></tr>
+    </thead>
+    <tbody id="accounts-body"></tbody>
+  </table>
+  <p id="accounts-empty" class="empty-state" style="display:none;">No accounts yet. Add one above.</p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/accounts.js' %}"></script>
+{% endblock %}

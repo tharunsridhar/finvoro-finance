@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Register - Finvoro{% endblock %}
+{% block navbar %}{% endblock %}
+{% block content %}
+<div class="auth-container">
+  <h1>Create your Finvoro account</h1>
+  <form id="register-form">
+    <label for="email">Email</label>
+    <input type="email" id="email" required autocomplete="email">
+
+    <label for="first_name">First name</label>
+    <input type="text" id="first_name" autocomplete="given-name">
+
+    <label for="last_name">Last name</label>
+    <input type="text" id="last_name" autocomplete="family-name">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required autocomplete="new-password">
+
+    <button type="submit" id="submit-btn">Register</button>
+    <div id="error-box" class="error-message" style="display:none;"></div>
+  </form>
+  <p class="auth-switch">Already have an account? <a href="/login/">Log in</a></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Transactions - Finvoro{% endblock %}
+{% block content %}
+<h1>Transactions</h1>
+
+<div class="card">
+  <h2>Add Transaction</h2>
+  <form id="transaction-form" class="form-inline">
+    <div>
+      <label for="transaction_type">Type</label>
+      <select id="transaction_type">
+        <option value="EXPENSE">Expense</option>
+        <option value="INCOME">Income</option>
+      </select>
+    </div>
+    <div>
+      <label for="account">Account</label>
+      <select id="account" required></select>
+    </div>
+    <div>
+      <label for="category">Category</label>
+      <select id="category" required></select>
+    </div>
+    <div>
+      <label for="amount">Amount</label>
+      <input type="number" step="0.01" id="amount" required>
+    </div>
+    <div>
+      <label for="date">Date</label>
+      <input type="date" id="date" required>
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input type="text" id="description">
+    </div>
+    <div>
+      <button type="submit" id="submit-btn">Add</button>
+    </div>
+  </form>
+  <div id="error-box" class="error-message" style="display:none;"></div>
+</div>
+
+<div class="card">
+  <h2>Filter</h2>
+  <form id="filter-form" class="form-inline">
+    <div>
+      <label for="filter_type">Type</label>
+      <select id="filter_type">
+        <option value="">All</option>
+        <option value="INCOME">Income</option>
+        <option value="EXPENSE">Expense</option>
+      </select>
+    </div>
+    <div>
+      <label for="filter_account">Account</label>
+      <select id="filter_account"><option value="">All</option></select>
+    </div>
+    <div>
+      <label for="filter_start">Start date</label>
+      <input type="date" id="filter_start">
+    </div>
+    <div>
+      <label for="filter_end">End date</label>
+      <input type="date" id="filter_end">
+    </div>
+    <div>
+      <button type="submit">Apply</button>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <div id="loading" class="loading-state">Loading...</div>
+  <table id="transactions-table" style="display:none;">
+    <thead>
+      <tr><th>Date</th><th>Description</th><th>Category</th><th>Account</th><th>Amount</th><th></th></tr>
+    </thead>
+    <tbody id="transactions-body"></tbody>
+  </table>
+  <p id="transactions-empty" class="empty-state" style="display:none;">No transactions match your filters.</p>
+  <div class="section-header">
+    <button class="secondary" id="prev-btn" disabled>Previous</button>
+    <button class="secondary" id="next-btn" disabled>Next</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/transactions.js' %}"></script>
+{% endblock %}

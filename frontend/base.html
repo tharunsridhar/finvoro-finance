@@ -1,0 +1,36 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Finvoro{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  {% block navbar %}
+  <header class="navbar">
+    <a class="brand" href="/dashboard/">Finvoro</a>
+    <nav>
+      <a href="/dashboard/">Dashboard</a>
+      <a href="/accounts/">Accounts</a>
+      <a href="/transactions/">Transactions</a>
+      <a href="/budgets/">Budgets</a>
+      <a id="logout-link">Logout</a>
+    </nav>
+  </header>
+  {% endblock %}
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{% static 'js/api.js' %}"></script>
+  {% block scripts %}{% endblock %}
+  <script>
+    const logoutLink = document.getElementById("logout-link");
+    if (logoutLink) {
+      logoutLink.addEventListener("click", () => Auth.logout());
+    }
+  </script>
+</body>
+</html>

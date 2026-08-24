@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Budgets - Finvoro{% endblock %}
+{% block content %}
+<h1>Budgets</h1>
+
+<div class="card">
+  <h2>Add Budget</h2>
+  <form id="budget-form" class="form-inline">
+    <div>
+      <label for="category">Category</label>
+      <select id="category" required></select>
+    </div>
+    <div>
+      <label for="amount">Amount</label>
+      <input type="number" step="0.01" id="amount" required>
+    </div>
+    <div>
+      <label for="month">Month</label>
+      <input type="number" id="month" min="1" max="12" required>
+    </div>
+    <div>
+      <label for="year">Year</label>
+      <input type="number" id="year" required>
+    </div>
+    <div>
+      <button type="submit" id="submit-btn">Add Budget</button>
+    </div>
+  </form>
+  <div id="error-box" class="error-message" style="display:none;"></div>
+</div>
+
+<div class="card">
+  <div id="loading" class="loading-state">Loading...</div>
+  <table id="budgets-table" style="display:none;">
+    <thead>
+      <tr><th>Category</th><th>Month/Year</th><th>Budget</th><th>Spent</th><th>Remaining</th><th>Used</th><th></th></tr>
+    </thead>
+    <tbody id="budgets-body"></tbody>
+  </table>
+  <p id="budgets-empty" class="empty-state" style="display:none;">No budgets yet. Add one above.</p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/budgets.js' %}"></script>
+{% endblock %}
