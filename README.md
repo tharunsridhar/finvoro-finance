@@ -101,3 +101,5 @@ GET  /api/v1/reports/accounts/
 Full interactive documentation (request/response schemas, try-it-out) is available at `/api/docs/` once the server is running.
 
 ## by Tharun Sridhar Natarajan
+
+<!-- last updated: 2026-11-11 -->
